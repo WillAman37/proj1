@@ -1,0 +1,31 @@
+<!-- <pre>{{photos | json}}</pre> -->
+
+<div class="category-info">
+  <p>Here goes information about {{currCategory | uppercase}}, as well as pricing information</p>
+  <a routerLink="/contact" class=".btn">Book now</a>
+</div>
+
+<div *ngIf="photos?.length" class="gallery columns is-multiline">
+
+  <!-- img item -->
+  <div class="column is-one-third is-vcentered" *ngFor="let photo of photos; let i=index" (click)="active=i; expanded=true;">
+    <div class="img-container">
+      <img src="{{photo.url}}" alt="{{photo.name}}">
+    </div>
+  </div>
+</div>
+
+<div *ngIf="expanded" class="expanded-img" (keydown.escape)="closeExpandedView()">
+  <div (click)="closeExpandedView()" class="expanded-bg"></div>
+  <div class="img-stuff">
+    <img src="{{photos[active].url}}">  <p>{{photos[active].description}}</p>
+    <a *ngIf="photos[active].user?.portfolio_url" target="_blank" href="{{photos[active].user.portfolio_url}}" class="bold_link">See
+      More from
+      {{photos[active].user?.username}}</a>
+  </div>
+  <div class="toolbar">
+    <button (click)="prev()">previous</button>
+    <button (click)="next()">next</button>
+    <button (click)="closeExpandedView()" class="closeViewBtn">X</button>
+  </div>
+</div>
